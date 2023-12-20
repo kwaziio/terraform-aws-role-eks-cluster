@@ -1,6 +1,6 @@
-##########################################################
-# AWS Identity and Access Management (IAM) Configuration #
-##########################################################
+###############################################################
+# AWS Identity and Access Management (IAM) Role Configuration #
+###############################################################
 
 variable "iam_role_name" {
   default     = "eks-cluster"
