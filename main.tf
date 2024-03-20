@@ -6,6 +6,14 @@ data "aws_iam_policy" "eks_cluster" {
   name = "AmazonEKSClusterPolicy"
 }
 
+data "aws_iam_policy" "eks_cni" {
+  name = "AmazonEKS_CNI_Policy"
+}
+
+data "aws_iam_policy" "eks_vpc_resource_controller" {
+  name = "AmazonEKSVPCResourceController"
+}
+
 ########################################################################################
 # Creates AWS Identity and Access Management (IAM) Assume Role Policy for EKS Clusters #
 ########################################################################################
@@ -42,5 +50,15 @@ resource "aws_iam_role" "eks_cluster" {
 
 resource "aws_iam_role_policy_attachment" "eks_cluster" {
   policy_arn = data.aws_iam_policy.eks_cluster.arn
+  role       = aws_iam_role.eks_cluster.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks_cni" {
+  policy_arn = data.aws_iam_policy.eks_cni.arn
+  role       = aws_iam_role.eks_cluster.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks_vpc_resource_controller" {
+  policy_arn = data.aws_iam_policy.eks_vpc_resource_controller.arn
   role       = aws_iam_role.eks_cluster.name
 }
